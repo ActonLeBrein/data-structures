@@ -1,86 +1,90 @@
-class ListNode:
-    def __init__(self,data):
+class Node:
+    def __init__(self,data,next=None):
         self.val=data
-        self.next=None
-        
+        self.next=next
+    
+    def getData(self):
+        return self.val
+
+    def setData(self,data):
+        self.val=val
+
+    def getNextNode(self):
+        return self.next
+
+class LinkedList:
+    def __init__(self,head=None):
+        self.head=head
+        self.size=0
+
+    def getSize(self):
+        return self.size
+
+    def contains(self,data):
+        if self.head==None:
+            return False
+        else:
+            tmp_head=self.head
+            while tmp_head is not None:
+                if tmp_head.val==data or data==None:
+                    return True
+                tmp_head=tmp_head.next
+            return False
+    
+    def addNode(self,data):
+        if not self.contains(data):
+            newNode=Node(data,self.head)
+            self.head=newNode
+            self.size+=1
+       
+    def printNode(self):
+        curr = self.head
+        while curr:
+            print curr.val
+            curr = curr.next
+     
 class Solution:
-    # @param two ListNodes
-    # @return the intersected ListNode
     def Intersection(self,headA,headB):
-        curA,curB,curC=headA,headB,None
+        curA,curB,curC=headA.head,headB,LinkedList()
         while curA is not None:
-            while curB is not None:
-                if curA.val==curB.val:
-                    newNode=ListNode(curA.val)
-                    newNode.next=curC
-                    curC=newNode
-                    print 'Found a match'
-                    break
-                else:
-                    curB=curB.next
-            curA=curA.next
-            curB=headB
+            if curB.contains(curA.getData()):
+                curC.addNode(curA.getData())
+                print 'Found a match'
+            curA=curA.getNextNode()
             
-        while curC is not None:
-            print curC.val
-            curC=curC.next
+        curC.printNode()
 
     def Union(self,headA,headB):
-        curA,curB,curC,curC_head,flag=headA,headB,None,None,False
+        curA,curB,curC=headA.head,headB.head,LinkedList()
         while curA is not None:
-            if curC_head is None:
-                newNode=ListNode(curA.val)
-                newNode.next=curC
-                curC=newNode
-                curC_head=curC
-            else:
-                while curC_head is not None:
-                    if curA.val!=curC_head.val:
-                        curC_head=curC_head.next
-                    else:
-                        flag=True
-                        break
-                if not flag:
-                    newNode=ListNode(curA.val)
-                    newNode.next=curC
-                    curC=newNode
-                    print 'Found a new item in listA {0}'.format(curA.val)
-            flag=False
-            curA=curA.next
-            curC_head=curC
-            
+            curC.addNode(curA.getData())
+            curA=curA.getNextNode()
         while curB is not None:
-            while curC_head is not None:
-                if curB.val!=curC_head.val:
-                    curC_head=curC_head.next
-                else:
-                    flag=True
-                    break
-            if not flag:
-                newNode=ListNode(curB.val)
-                newNode.next=curC
-                curC=newNode
-                print 'Found a new item in listB {0}'.format(curB.val)
-            flag=False
-            curB=curB.next
-            curC_head=curC
+            curC.addNode(curB.getData())
+            curB=curB.getNextNode()
             
-        while curC is not None:
-            print curC.val
-            curC=curC.next
+        curC.printNode()
         
-link_A=ListNode(2)
-link_A.next=ListNode(5)
-link_A.next.next=ListNode(10)
-link_A.next.next.next=ListNode(4)
+link_A=LinkedList()
+link_A.addNode(2)
+link_A.addNode(5)
+link_A.addNode(10)
+link_A.addNode(4)
+link_A.addNode(10)
+print 'link_A '
+link_A.printNode()
 
-link_B=ListNode(1)
-link_B.next=ListNode(5)
-link_B.next.next=ListNode(1)
-link_B.next.next.next=ListNode(10)
-link_B.next.next.next.next=ListNode(105)
-link_B.next.next.next.next.next=ListNode(2)
+link_B=LinkedList()
+link_B.addNode(5)
+link_B.addNode(1)
+link_B.addNode(10)
+link_B.addNode(105)
+link_B.addNode(2)
+print 'link_B '
+link_B.printNode()
 
 sol=Solution()
+print 'link_C intrsection '
 sol.Intersection(link_A,link_B)
+print 'link_C union '
 sol.Union(link_A,link_B)
