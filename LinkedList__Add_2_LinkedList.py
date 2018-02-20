@@ -1,5 +1,17 @@
 # Python program to add two numbers represented by linked list
- 
+'''
+Input:
+  First List: 5->6->3  // represents number 365
+  Second List: 8->4->2 //  represents number 248
+Output
+  Resultant list: 3->1->6  // represents number 613
+  
+Input:
+  First List: 7->5->9->4->6  // represents number 64957
+  Second List: 8->4 //  represents number 48
+Output
+  Resultant list: 5->0->0->5->6  // represents number 65005
+'''
 # Node class
 class Node:
  
